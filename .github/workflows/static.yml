@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sana Özel Bir Sürpriz</title>
+    <style>
+        /* Genel Stil Ayarları */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            transition: background-color 1.5s ease; /* Arka plan geçişi yumuşak olsun */
+            text-align: center;
+        }
+        /* Aşamaların Gizlenmesi */
+        .stage {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        /* Buton Stilleri */
+        button {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            cursor: pointer;
+            border: none;
+            border-radius: 30px;
+            margin-top: 20px;
+            transition: transform 0.2s, background-color 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        button:hover {
+            transform: translateY(-2px);
+        }
+
+        /* ---------------------------------- */
+        /* AŞAMA 1: SİYAH EKRAN */
+        /* ---------------------------------- */
+        #stage1 {
+            color: white;
+            background-color: black;
+            font-size: 1.5em;
+        }
+        #stage1 button {
+            background-color: #ff4757; /* Kırmızımsı buton */
+            color: white;
+        }
+
+        /* ---------------------------------- */
+        /* AŞAMA 2: BEYAZ EKRAN */
+        /* ---------------------------------- */
+        #stage2 {
+            color: #333;
+            background-color: white;
+        }
+        #stage2 button {
+            background-color: #ffb8b8; /* Açık pembe buton */
+            font-size: 2em;
+        }
+
+        /* ---------------------------------- */
+        /* AŞAMA 3: İTİRAF */
+        /* ---------------------------------- */
+        #stage3 {
+            color: #d63031; /* Kırmızı yazı */
+            background-color: #ffeaa7; /* Soluk sarı arka plan */
+            font-size: 1.6em;
+        }
+        #stage3 button {
+            background-color: #00b894; /* Yeşil buton */
+            color: white;
+        }
+        
+        /* ---------------------------------- */
+        /* AŞAMA 4: FİNAL - BALONLAR */
+        /* ---------------------------------- */
+        #stage4 {
+            color: #4834d4; /* Mor yazı */
+            background-color: #a29bfe; /* Açık mor arka plan */
+            font-size: 1.8em;
+            position: relative;
+            overflow: hidden; /* Balonların ekrandan çıkmasını sağlar */
+        }
+        /* Basit Balon Animasyonu */
+        .balloon {
+            position: absolute;
+            width: 30px;
+            height: 40px;
+            background: linear-gradient(#f0932b, #eb4d4b);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            opacity: 0.7;
+            animation: floatUp 15s ease-in infinite;
+            bottom: -50px; /* Ekranın altından başlar */
+            box-shadow: inset -5px -5px 10px rgba(0, 0, 0, 0.2);
+        }
+        .balloon:nth-child(2) { background: linear-gradient(#a3ff1a, #00b894); left: 10%; animation-duration: 12s; }
+        .balloon:nth-child(3) { background: linear-gradient(#5352ed, #2e86de); left: 25%; animation-duration: 10s; }
+        .balloon:nth-child(4) { background: linear-gradient(#ff7979, #eb4d4b); left: 40%; animation-duration: 14s; }
+        .balloon:nth-child(5) { background: linear-gradient(#ffda79, #ffaf40); left: 60%; animation-duration: 11s; }
+        .balloon:nth-child(6) { background: linear-gradient(#a3ff1a, #57606f); left: 80%; animation-duration: 16s; }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
+            100% { transform: translateY(-1000px) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body id="mainBody">
+
+    <div class="stage" id="stage1">
+        <p>Senden önce hayatım **böyleydi**...</p>
+        <button onclick="nextStage(2)">
+            Senden Sonrasını Görmek İstiyorsan Bu Seçeneğe Tıkla
+        </button>
+    </div>
+
+    <div class="stage" id="stage2">
+        <p style="font-size: 1.3em;">Yeni bir sayfa açtın.</p>
+        <button onclick="nextStage(3)">
+            🥰
+        </button>
+    </div>
+
+    <div class="stage" id="stage3">
+        <p>Gördün mü ne kadar değiştirdin beni? Öpücükler 😘</p>
+        <button onclick="nextStage(4)">
+            Tıkla
+        </button>
+    </div>
+
+    <div class="stage" id="stage4">
+        <p>Bana saf sevgiyi öğrettiğin için **TEŞEKKÜR EDERİM** sevgilim.</p>
+        <div style="margin-top: 30px; font-size: 1.5em; font-weight: bold;">
+            <p>💖✨🥺💋</p>
+            <p>Ben seni çok özledim.</p>
+            <p>Bu saçma şey bitsin, seni **ÇOK SEVİYORUM**!</p>
+        </div>
+        <div class="balloon"></div>
+        <div class="balloon"></div>
+        <div class="balloon"></div>
+        <div class="balloon"></div>
+        <div class="balloon"></div>
+        <div class="balloon"></div>
+    </div>
+
+    <script>
+        // Sayfa yüklendiğinde ilk aşamayı göster
+        document.addEventListener('DOMContentLoaded', () => {
+            nextStage(1);
+        });
+
+        // Aşamalar arasında geçiş yapan fonksiyon
+        function nextStage(stageNumber) {
+            const stages = document.querySelectorAll('.stage');
+            const mainBody = document.getElementById('mainBody');
+
+            // Tüm aşamaları gizle
+            stages.forEach(stage => {
+                stage.style.display = 'none';
+            });
+
+            // İstenen aşamayı göster
+            const currentStage = document.getElementById('stage' + stageNumber);
+            if (currentStage) {
+                currentStage.style.display = 'flex';
+            }
+
+            // Arka planı ilgili aşamanın rengiyle güncelle
+            if (stageNumber === 1) {
+                mainBody.style.backgroundColor = 'black';
+                mainBody.style.color = 'white';
+            } else if (stageNumber === 2) {
+                mainBody.style.backgroundColor = 'white';
+                mainBody.style.color = '#333';
+            } else if (stageNumber === 3) {
+                mainBody.style.backgroundColor = '#ffeaa7'; // Sarımsı
+                mainBody.style.color = '#d63031'; // Kırmızımsı
+            } else if (stageNumber === 4) {
+                mainBody.style.backgroundColor = '#a29bfe'; // Mor
+                mainBody.style.color = 'white'; // Beyaz yazı
+            }
+
+            // Tüm içeriğin tam ortalanmasını sağla
+            mainBody.style.justifyContent = 'center';
+            mainBody.style.alignItems = 'center';
+        }
+    </script>
+</body>
+</html>
